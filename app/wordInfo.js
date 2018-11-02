@@ -28,7 +28,7 @@ let getDefinition = (word)=>{
 
 let getSynonyms = (word)=>{
     var options = {
-        url: `${constants.baseUrl}/entries/en/${word}`,
+        url: `${constants.baseUrl}/entries/en/${word}/synonyms`,
         headers: {
             'app_id': constants.apiId,
             'app_key':constants.apiKey
@@ -43,9 +43,9 @@ let getSynonyms = (word)=>{
             } else {
                 let obj = JSON.parse(body)
               
-              //  console.log(obj.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0])
-              let definition = obj.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0];
-              resolve(definition)
+            // console.log(obj)
+             let synonyms =obj.results[0].lexicalEntries[0].entries[0].senses[0].synonyms
+          resolve(synonyms)
 
             }
         })
@@ -54,7 +54,7 @@ let getSynonyms = (word)=>{
 
 let getAntonyms = (word)=>{
     var options = {
-        url: `${constants.baseUrl}/entries/en/${word}`,
+        url: `${constants.baseUrl}/entries/en/${word}/antonyms`,
         headers: {
             'app_id': constants.apiId,
             'app_key':constants.apiKey
@@ -70,7 +70,7 @@ let getAntonyms = (word)=>{
                 let obj = JSON.parse(body)
               
               //  console.log(obj.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0])
-              let definition = obj.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0];
+              let definition = obj.results[0].lexicalEntries[0].entries[0].senses[0].antonyms;
               resolve(definition)
 
             }
@@ -157,5 +157,7 @@ let getInfoOfWordOfDay = (word)=>{
 }
 module.exports = {
     getDefinition:getDefinition,
-    getExamples:getExamples
+    getExamples:getExamples,
+    getSynonyms:getSynonyms,
+    getAntonyms:getAntonyms
 }

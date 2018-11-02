@@ -32,9 +32,29 @@ rl.on('line', (input) => {
           console.log(err)
         })
       } else if (finalInput[1] == constants.types.synonyms) {
-        console.log("synonym of word")
+        wordInfo.getSynonyms(finalInput[2]).then((resolve) => {
+          console.log(`"Synonyms : "`)
+          //  console.log(resolve)
+         let x = 1;
+          for (let i in resolve) {
+              console.log(`${x}. ${resolve[i].text}`)
+              x++;
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
       } else if (finalInput[1] == constants.types.antonyms) {
-        console.log("antonyms of word")
+        wordInfo.getAntonyms(finalInput[2]).then((resolve) => {
+          console.log(`"Antonyms : "`)
+          //  console.log(resolve)
+         let x = 1;
+          for (let i in resolve) {
+              console.log(`${x}. ${resolve[i].text}`)
+              x++;
+          }
+        }).catch((err) => {
+          console.log(err)
+        })
       } else if (finalInput[1] == constants.types.examples) {
         wordInfo.getExamples(finalInput[2]).then((resolve) => {
           console.log(`"Examples : "`)
