@@ -1,0 +1,9 @@
+#! /usr/bin/env node
+const jsonexport = require('./index.js');
+
+const stdin = process.stdin;
+const stdout = process.stdout;
+const input1 = process.argv[2];
+const input2 = process.argv[3];
+
+jsonexport.executeCommands(input1,input2);
