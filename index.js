@@ -14,10 +14,13 @@ let dictionary = {
 // });
 
 let executeCommands = (cmd, word) => {
-  console.log(cmd);
-  console.log(word)
+  // console.log(cmd);
+  // console.log(word)
   if (cmd == undefined) {
-    console.log("all details of word of the day")
+    wordInfo.getInfoOfWordOfDay().then((resolve)=>{
+     // console.log(resolve)
+      printWordInfo(resolve);
+    })
   } else {
 
     switch (cmd) {
@@ -27,7 +30,6 @@ let executeCommands = (cmd, word) => {
         } else {
           wordInfo.getDefinition(word).then((resolve) => {
             console.log(`"Definitions : "`)
-              console.log(resolve)
             let x = 1;
             for (let i in resolve) {
               console.log(`${x}. ${resolve[i]}`)

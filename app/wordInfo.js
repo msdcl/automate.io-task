@@ -17,7 +17,7 @@ let getDefinition = (word) => {
             } else {
                // console.log(resp.statusCode)
                 if(resp.statusCode==404){
-                    console.log("Oops! Word does not exist")
+                    console.log("Oops! Word does not exist-definition")
                 }else{
                    let obj = JSON.parse(body)
 
@@ -53,7 +53,7 @@ let getSynonyms = (word) => {
             } else {
 
                 if(resp.statusCode==404){
-                    console.log("Oops! Word does not exist")
+                    console.log("Oops! Word does not exist-synonyms")
                 }else{
                 let obj = JSON.parse(body)
 
@@ -88,7 +88,7 @@ let getAntonyms = (word) => {
             } else {
 
                 if(resp.statusCode==404){
-                    console.log("Oops! Word does not exist")
+                    console.log("Oops! Word does not exist-antonyms")
                 }else{
                 let obj = JSON.parse(body)
 
@@ -121,7 +121,7 @@ let getExamples = (word) => {
                 reject(err);
             } else {
                 if(resp.statusCode==404){
-                    console.log("Oops! Word does not exist")
+                    console.log("Oops! Word does not exist-example")
                 }else{
                 let obj = JSON.parse(body)
 
@@ -145,39 +145,25 @@ let getAllInfoOfWord = (word) => {
     
 }
 
-let getInfoOfWordOfDay = (word) => {
-    var options = {
-        url: `${constants.baseUrl}/entries/en/${word}`,
-        headers: {
-            'app_id': constants.apiId,
-            'app_key': constants.apiKey
-        }
-    };
-    // Return new promise 
-    return new Promise(function (resolve, reject) {
-        // Do async job
-        request.get(options, function (err, resp, body) {
-            if (err) {
-                reject(err);
-            } else {
-                if(resp.statusCode==404){
-                    console.log("Oops! Word does not exist")
-                }else{
-                console.log(body)
-                // let obj = JSON.parse(body)
-               
-                //  console.log(obj.results[0].lexicalEntries[0].entries[0].senses[0].definitions[0])
-                // let definition = obj.results[0].lexicalEntries[0].entries[0].senses;
-                // resolve(definition)
-                }
-            }
-        })
-    })
+let getInfoOfWordOfDay = () => {
+
+    let wordArr = constants.dummyWords;
+    let randomIndex = constants.getRandomInt(1,wordArr.length);
+    console.log(randomIndex)
+    let word = wordArr[randomIndex-1];
+    console.log(`Word of day:- ${word}`)
+    let definition= getDefinition(word)
+    let synonyms=getSynonyms(word)
+    let antonyms=  getAntonyms(word)
+ 
+ return  Promise.all([definition,synonyms, antonyms])
+  
 }
 module.exports = {
     getDefinition: getDefinition,
     getExamples: getExamples,
     getSynonyms: getSynonyms,
     getAntonyms: getAntonyms,
-    getAllInfoOfWord:getAllInfoOfWord
+    getAllInfoOfWord:getAllInfoOfWord,
+    getInfoOfWordOfDay:getInfoOfWordOfDay
 }
