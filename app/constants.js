@@ -19,12 +19,18 @@ let dummyWords = ['agree','warm','silence','destroy','gather','gain','high','hug
                  ]
 let getRandomInt=(min, max)=> {
                     return Math.floor(Math.random() * (max - min + 1)) + min;
-                }                 
+                }  
+                
+let getRandomWord = ()=>{
+    let index = getRandomInt(1,dummyWords.length);
+    return dummyWords[index-1];
+}                
 module.exports ={
     types:type,
     baseUrl:baseUrl,
     apiKey:apiKey,
     apiId:apiId,
     getRandomInt:getRandomInt,
-    dummyWords:dummyWords
+    dummyWords:dummyWords,
+    getRandomWord:getRandomWord
 }

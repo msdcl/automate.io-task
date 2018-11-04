@@ -17,7 +17,8 @@ let getDefinition = (word) => {
             } else {
                // console.log(resp.statusCode)
                 if(resp.statusCode==404){
-                    console.log("Oops! Word does not exist-definition")
+                    console.log("Oops! definition does not exist")
+                    process.exit();
                 }else{
                    let obj = JSON.parse(body)
 
@@ -53,7 +54,8 @@ let getSynonyms = (word) => {
             } else {
 
                 if(resp.statusCode==404){
-                    console.log("Oops! Word does not exist-synonyms")
+                    console.log("Oops! synonyms does not exist")
+                    process.exit();
                 }else{
                 let obj = JSON.parse(body)
 
@@ -88,7 +90,8 @@ let getAntonyms = (word) => {
             } else {
 
                 if(resp.statusCode==404){
-                    console.log("Oops! Word does not exist-antonyms")
+                    console.log("Oops! antonyms does not exist");
+                    process.exit();
                 }else{
                 let obj = JSON.parse(body)
 
@@ -121,7 +124,8 @@ let getExamples = (word) => {
                 reject(err);
             } else {
                 if(resp.statusCode==404){
-                    console.log("Oops! Word does not exist-example")
+                    console.log("Oops! example does not exist");
+                    process.exit();
                 }else{
                 let obj = JSON.parse(body)
 
@@ -139,24 +143,24 @@ let getAllInfoOfWord = (word) => {
     let definition= getDefinition(word)
     let synonyms=getSynonyms(word)
     let antonyms=  getAntonyms(word)
+    let examples = getExamples(word)
  
- return  Promise.all([definition,synonyms, antonyms])
+ return  Promise.all([definition,synonyms, antonyms,examples])
 
     
 }
 
 let getInfoOfWordOfDay = () => {
 
-    let wordArr = constants.dummyWords;
-    let randomIndex = constants.getRandomInt(1,wordArr.length);
-    console.log(randomIndex)
-    let word = wordArr[randomIndex-1];
+   
+    let word = constants.getRandomWord();
     console.log(`Word of day:- ${word}`)
     let definition= getDefinition(word)
     let synonyms=getSynonyms(word)
     let antonyms=  getAntonyms(word)
+    let examples = getExamples(word)
  
- return  Promise.all([definition,synonyms, antonyms])
+ return  Promise.all([definition,synonyms, antonyms,examples])
   
 }
 module.exports = {

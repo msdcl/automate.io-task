@@ -1,24 +1,14 @@
 let constants = require('./app/constants')
 let wordInfo = require('./app/wordInfo')
-let dictionary = {
-  'firstArgument': './dict',
-  'gameMode': false
-};
+let game = require('./app/game')
 
-
-// let readline = require('readline');
-// let rl = readline.createInterface({
-//   input: process.stdin,
-//   output: process.stdout,
-//   terminal: false
-// });
 
 let executeCommands = (cmd, word) => {
   // console.log(cmd);
   // console.log(word)
   if (cmd == undefined) {
     wordInfo.getInfoOfWordOfDay().then((resolve)=>{
-     // console.log(resolve)
+   
       printWordInfo(resolve);
     })
   } else {
@@ -35,11 +25,12 @@ let executeCommands = (cmd, word) => {
               console.log(`${x}. ${resolve[i]}`)
               x++;
             }
-
+            process.exit();
           }).catch((err) => {
            
             console.log(err)
           })
+         
         }
 
         break;
@@ -55,6 +46,7 @@ let executeCommands = (cmd, word) => {
               console.log(`${x}. ${resolve[i]}`)
               x++;
             }
+            process.exit()
           }).catch((err) => {
             console.log(err)
           })
@@ -74,6 +66,7 @@ let executeCommands = (cmd, word) => {
               console.log(`${x}. ${resolve[i]}`)
               x++;
             }
+            process.exit()
           }).catch((err) => {
             console.log(err)
           })
@@ -97,6 +90,7 @@ let executeCommands = (cmd, word) => {
               }
 
             }
+            process.exit();
           }).catch((err) => {
             console.log(err)
           })
@@ -105,7 +99,7 @@ let executeCommands = (cmd, word) => {
         break;
 
       case 'play':
-        console.log("start word game");
+        game.startGame();
         break;
       case 'dict':
         if (word == undefined) {
@@ -133,20 +127,7 @@ let executeCommands = (cmd, word) => {
 
 }
 
-// rl.on('line', (input) => {
 
-//   let finalInput = input.toString().trim().split(" ");
-//   console.log(finalInput)
-//   if (finalInput[0] == dictionary.firstArgument) {
-//     if (dictionary.gameMode) {
-
-//     } else {
-
-//     }
-//   } else {
-//     console.log("Invalid input")
-//   }
-// })
 
 let printWordInfo = (resolve) => {
   for (let x in resolve) {
@@ -171,9 +152,21 @@ let printWordInfo = (resolve) => {
         console.log(`${y}. ${j}`);
         y++;
       }
+    }else if(x==3){
+      let y = 1;
+      console.log("'Examples':")
+            for (let i of resolve[x]) {
+              let arr = i.examples;
+              for (let j in arr) {
+                console.log(`${y}. ${arr[j].text}`)
+                y++;
+              }
+
+            }
     }
     console.log()
   }
+  process.exit();
 }
 console.log("Welcome to Command Line Dictionary");
 
